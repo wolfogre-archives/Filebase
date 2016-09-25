@@ -6,7 +6,7 @@
 
     <groupId>com.wolfogre</groupId>
     <artifactId>filebase</artifactId>
-    <version>1.0</version>
+    <version>0.1</version>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.qiniu/qiniu-java-sdk -->

@@ -1,14 +1,13 @@
 package com.wolfogre.filebase;
 
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 
 /**
  * Created by wolfogre on 9/23/16.
  */
 public abstract class Filebase {
-    private Index index;
+    protected Index index;
 
     public Filebase(Index index) {
         this.index = index;
@@ -22,6 +21,7 @@ public abstract class Filebase {
 
     public abstract void remove(String reference);
 
+    @Deprecated
     public abstract String getMimeType(String reference);
 
     public abstract void gc();

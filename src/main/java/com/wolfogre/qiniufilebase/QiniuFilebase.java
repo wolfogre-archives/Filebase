@@ -25,16 +25,20 @@ public class QiniuFilebase extends Filebase {
     private Auth auth;
     private String bucket;
     private String domain;
+    private BucketManager bucketManager;
+    private UploadManager uploadManager;
 
     public QiniuFilebase(Index index) {
         super(index);
         bucket = index.getConfig("bucket");
         domain = index.getConfig("domain");
         auth = Auth.create(index.getConfig("accesskey"), index.getConfig("secretkey"));
+        bucketManager = new BucketManager(auth);
+        uploadManager = new UploadManager();
     }
 
     public String upload(InputStream input) {
-        UploadManager uploadManager = new UploadManager();
+
         try {
             byte[] bytes = new byte[input.available()];
             if(input.read(bytes) != bytes.length)
@@ -71,7 +75,6 @@ public class QiniuFilebase extends Filebase {
     }
 
     public String getMimeType(String reference) {
-        BucketManager bucketManager = new BucketManager(auth);
         try {
             return bucketManager.stat(bucket, index.getRemotePath(reference)).mimeType;
         } catch (QiniuException e) {

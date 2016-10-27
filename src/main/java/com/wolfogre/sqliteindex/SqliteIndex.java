@@ -82,7 +82,7 @@ public class SqliteIndex implements Index {
     public void deleteReference(String reference) {
         if(!executeExists("SELECT EXISTS (SELECT * FROM reference WHERE id = '" + reference + "')"))
             return;
-        executeUpdate("DELETE reference WHERE id = '" + reference + "'");
+        executeUpdate("DELETE FROM reference WHERE id = '" + reference + "'");
     }
 
     public void gc() {

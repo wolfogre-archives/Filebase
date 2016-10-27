@@ -27,11 +27,13 @@ public class QiniuFilebase extends Filebase {
     private String domain;
     private BucketManager bucketManager;
     private UploadManager uploadManager;
+    private boolean isPrivate;
 
     public QiniuFilebase(Index index) {
         super(index);
         bucket = index.getConfig("bucket");
         domain = index.getConfig("domain");
+        isPrivate = "true".equals(index.getConfig("isprivate"));
         auth = Auth.create(index.getConfig("accesskey"), index.getConfig("secretkey"));
         bucketManager = new BucketManager(auth);
         uploadManager = new UploadManager();
@@ -64,6 +66,8 @@ public class QiniuFilebase extends Filebase {
 
     public URL download(String reference, int timeout) {
         try {
+            if(!isPrivate)
+                return new URL(domain + index.getRemotePath(reference));
             return new URL(auth.privateDownloadUrl(domain + index.getRemotePath(reference), timeout));
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
